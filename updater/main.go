@@ -17,12 +17,12 @@ type Contact struct {
 type Info struct {
 	Version     string
 	Description string
-	Contact
+	Contact     Contact
 }
 
 func main() {
 	programInfo := Info{
-		"0.9.0",
+		"1.0.0",
 		"This script checks for new version",
 		Contact{
 			"example@gmail.com",
@@ -35,12 +35,15 @@ func main() {
 		fmt.Println(err)
 	}
 	if needUpdate {
+		fmt.Println("Start update")
 		// call update function
+	} else {
+		fmt.Println("Update not need")
 	}
 }
 
 func needUpdate(cerVer Info) (bool, error) {
-	resp, err := http.Get("https://meromen.github.io/go-tasks/tasks/updater/getInfo.json")
+	resp, err := http.Get("http://meromen.github.io/go-tasks/updater/getInfo.json")
 	if err != nil {
 		return false, err
 	}

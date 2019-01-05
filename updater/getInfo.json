@@ -1,7 +1,7 @@
 {
     "Version": "1.0.0",
     "Description": "This script checks for new version",
-    "Vontact": {
+    "Contact": {
         "Email": "example@gmail.com",
         "Github": "http://github.com/example.com"
     }

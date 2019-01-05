@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -30,26 +31,25 @@ func main() {
 		log.Fatal(err)
 	}
 
-	saveDir, err := ioutil.TempDir(os.TempDir(), "")
-	err = os.Mkdir(saveDir+"tmp", 0700)
-	tts2media.SetDataDir(saveDir)
-
 	espeak := &tts2media.EspeakSpeech{
 		Text:     string(text), // text to turn to speech
-		Lang:     "ru",         // language
-		Speed:    "135",        // speed
-		Gender:   "m",          // gender
+		Lang:     "en",         // language
+		Speed:    "190",        // speed
+		Gender:   "f",          // gender
 		Altvoice: "0",          // alternative voice
 		Quality:  "high",       // quality of output mp3/ogg audio
 		Pitch:    "50",         // pitch
 	}
 
 	media, err := espeak.NewEspeakSpeech()
+	fmt.Println(media)
 	err = media.ToAudio()
 	if err != nil {
-		os.Exit(1)
+		fmt.Println(err)
 	}
+	os.Rename("./"+media.Filename+".mp3", "testAudio.mp3")
+	os.Remove("./" + media.Filename + ".ogg")
+	os.Remove("./" + media.Filename + ".mp3")
 
 	media.RemoveWAV()
-
 }
